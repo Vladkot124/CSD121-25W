@@ -24,4 +24,4 @@
 
 ### References:
 - Java Documentation: https://docs.oracle.com/javase/8/docs/api/
-- GitHub Repository: [https://github.com/Vladkot124/CSD121-25W](https://github.com/Vladkot124/CSD121-25W)
+- GitHub Respository: [https://github.com/Vladkot124/CSD121-25W](https://github.com/Vladkot124/CSD121-25W)
