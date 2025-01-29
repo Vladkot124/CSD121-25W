@@ -10,9 +10,17 @@ import java.net.URI;// For handling input streams, such as image data streams
 import java.net.http.HttpClient;// For making HTTP requests
 import java.net.http.HttpRequest;// For creating HTTP requests
 import java.net.http.HttpResponse;// For handling HTTP responses
-
+/**
+ * The {@code AvatarGenerator} class fetches a random avatar from the DiceBear API
+ * and displays it in a GUI window.
+ */
 public class AvatarGenerator {
     // Main method - entry point of the program
+    /**
+     * The main method that starts the program.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
 
         try {
@@ -25,6 +33,13 @@ public class AvatarGenerator {
         }
 
     }
+    /**
+     * Fetches a random avatar image stream from the DiceBear API.
+     *
+     * @return An {@code InputStream} containing the avatar image.
+     * @throws IOException          If an error occurs while fetching the image.
+     * @throws InterruptedException If the HTTP request is interrupted.
+     */
     // class:Method to fetch a random avatar image stream from the DiceBear API
     public static InputStream getRandomAvatarStream() throws IOException, InterruptedException {
         // Pick a random style
@@ -46,6 +61,11 @@ public class AvatarGenerator {
         }
     }
     // Method to display the avatar image in a GUI window
+    /**
+     * Displays the avatar image in a GUI window.
+     *
+     * @param imageStream The {@code InputStream} containing the avatar image.
+     */
     public static void showAvatar(InputStream imageStream) {
         //Package: javax.swing. Purpose: A window to display GUI components.
             JFrame frame = new JFrame("PNG Viewer");// Create a new JFrame window to display the image
