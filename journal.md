@@ -88,3 +88,118 @@
 - This lab helped me understand Java classes, methods, and how to structure a simple game.
 - I faced some errors, but by debugging and fixing them one by one, I made a working Tic Tac Toe game.
 - This was a good learning experience!  
+
+
+
+## January 20, 2025 (Monday) - Lecture Notes: Introduction to Java
+Today, we started the course with an introduction to Java programming. The focus was on the fundamentals: data types, variables, and control structures. The instructor emphasized the importance of understanding how Java handles different data types, including int, float, double, char, and boolean.
+
+Key points discussed:
+
+- **Data Types**: We learned how to declare and use variables in Java.
+- **Control Structures**: We explored basic control structures like if, else, and while loops.
+- **Method Declaration**: The importance of method signature, and the difference between void and returning values.
+
+I had a couple of questions on how to choose the right data type for a project, especially in terms of memory optimization. I'll explore more about this in the next few days.
+
+## January 22, 2025 (Wednesday) - Lecture Notes: Using Objects
+In this lecture, we dived into object-oriented programming (OOP) and the concept of using objects in Java. We discussed the creation and utilization of objects and classes, and how to implement constructors and methods.
+
+Key concepts covered:
+
+- **Classes and Objects**: Understanding the relationship between classes and objects was the highlight of this lecture. A class is a blueprint, and an object is an instance of that blueprint.
+- **Constructors**: We learned how to create constructors to initialize objects.
+- **Methods**: The importance of creating methods to define the behaviors of objects was emphasized.
+
+Challenges I faced included understanding how constructors can be overloaded. I plan to practice more on creating constructors with different parameters.
+
+## January 25, 2025 (Saturday) - Personal Project Work
+Today, I focused on applying what I learned to a simple Java program where I took user input and stored the results in a file. The goal was to practice object creation and method usage. I used a Scanner object to get input from the user, and then wrote that data to a text file.
+
+Issues encountered:
+
+- Writing to a file wasn't smooth at first. I had to properly manage file handling and exceptions using try-catch blocks.
+
+## January 27, 2025 (Monday) - Lecture Notes: Implementing Classes
+In today’s class, we focused on implementing classes with methods that work on objects. The concept of instance variables and methods was explored in depth.
+
+Highlights:
+
+- **Encapsulation**: The idea that you should keep the internal workings of an object hidden from other objects, exposing only the necessary features via methods.
+- **Access Modifiers**: We studied the different access levels: private, public, protected, and their use cases.
+
+The lecturer showed examples of creating a Book class with instance variables like title and author and methods like getTitle() and setTitle(). This helped me understand how to keep object data safe while still allowing controlled access.
+
+## January 29, 2025 (Wednesday) - Lecture Notes: More on Objects and Methods
+This lecture expanded on the use of objects, focusing on methods that operate on objects and return values. We also worked with ArrayLists and iterators in Java.
+
+Key lessons:
+
+- **Method Overloading**: The ability to have methods with the same name but different parameters.
+- **ArrayList Usage**: This dynamic data structure allows you to store elements and access them using indices, unlike arrays in Java.
+- **Iterators**: We learned how to use iterators to loop through elements in collections like ArrayLists.
+
+Today’s session helped me better understand how to handle dynamic data and iterate through collections, which I can apply to future projects.
+
+## February 1, 2025 (Saturday) - Personal Project Work
+Worked on refining the program from last week. I added error handling for user input and improved the file writing process. I also started incorporating the idea of method overloading in my project. The methods to handle user input now have different signatures depending on the type of data entered.
+
+## February 3, 2025 (Monday) - Lecture Notes: Build Automation and Testing
+We covered the concepts of Build Automation and Testing in Java today. The focus was on tools like Maven for project management and automating the build process.
+
+Key highlights:
+
+- **Maven**: This tool automates the build process, allowing you to handle dependencies and project structure more efficiently.
+- **JUnit**: We were introduced to the basics of JUnit testing to write unit tests for our Java code.
+
+I was particularly interested in JUnit testing, as it provides a way to test individual units of code for correctness. I plan to integrate JUnit tests into my projects moving forward.
+
+## February 5, 2025 (Wednesday) - Lecture Notes: More on Build Automation and Testing
+We dug deeper into Maven and JUnit today. The lecture included examples of unit testing and how to integrate them with Maven for automatic testing during the build process.
+
+Key points:
+
+- **JUnit Tests**: Writing test cases to ensure the code works as expected.
+- **Maven Integration**: We saw how Maven helps in automatically running tests during the build process.
+
+I also realized the importance of continuous integration and automatic testing, which will save time and reduce human error in future projects.
+
+## February 8, 2025 (Saturday) - Personal Project Work
+- I applied the lessons from the Maven and JUnit lectures to my current project. I set up Maven to manage my dependencies and added some basic unit tests to check if my methods worked as expected. This helped me identify and fix a couple of issues with input validation that I hadn’t noticed before.
+## February 10, 2025 (Monday) - Lecture Notes: Advanced Object-Oriented Concepts
+Today’s lecture was about more advanced OOP concepts like Inheritance and Polymorphism.
+
+
+We continued our discussion on OOP concepts, focusing on abstract classes and interfaces.
+
+Key points:
+
+Abstract Classes: These classes cannot be instantiated but can provide a base for other classes to inherit from.
+Interfaces: Interfaces define methods without implementations, which must be implemented by classes.
+This lecture really helped clarify the role of abstract classes and interfaces in OOP design. I’m now more confident in my ability to apply these concepts in larger projects.
+- **Inheritance**: We learned how a subclass can inherit properties and methods from a superclass.
+- **Polymorphism**: The ability of an object to take on many forms, such as method overriding and dynamic method dispatch.
+
+I had some difficulty understanding how polymorphism works, especially when trying to override methods in subclasses. I plan to review the concept by writing more example code.
+
+## February 12, 2025 (Wednesday) - Lecture Notes: Finalizing OOP Concepts
+We continued our discussion on OOP concepts, focusing on abstract classes and interfaces.
+
+Key points:
+
+- **Abstract Classes**: These classes cannot be instantiated but can provide a base for other classes to inherit from.
+- **Interfaces**: Interfaces define methods without implementations, which must be implemented by classes.
+
+This lecture really helped clarify the role of abstract classes and interfaces in OOP design. I’m now more confident in my ability to apply these concepts in larger projects.
+
+## February 14, 2025 (Friday) - Personal Project Work
+- Worked on improving the code for my ongoing project by adding more structure using inheritance. I created a base class Person with subclasses like Student and Teacher. This allowed me to reuse common functionality and add specific behavior to each subclass.
+## February 17, 2025 (Monday) - Lecture Notes: Polishing Java Code 
+- IIn today’s lecture, we discussed how to refine Java code . The focus was on code readability, proper commenting, and optimization.
+
+- Key lessons:
+
+- Refactoring: We practiced refactoring code to improve performance and readability.
+- Commenting: Proper commenting to ensure that the code is easily understandable by others.
+- I  realized that refactoring is an important step in improving code efficiency and readability, and it should be part of every development process.
+
