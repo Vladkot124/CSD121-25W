@@ -41,7 +41,7 @@ public class Board {
         switch (this.getWinner()) {
             case X: return Status.XWins;
             case O: return Status.OWins;
-            case null: {
+            case    null: {
                 if (this.isFull()) {
                     return Status.Draw;
                 } else {
