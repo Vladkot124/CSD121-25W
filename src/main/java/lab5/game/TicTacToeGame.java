@@ -1,64 +1,224 @@
 package tictactoe.game;
 
-import tictactoe.players.Player;
+import java.util.ArrayList;
+import java.util.List;
+
+import static tictactoe.game.PlayerToken.O;
+import static tictactoe.game.PlayerToken.X;
 
 /**
- * Represents the current state of a tictactoe game, including which player's turn it is,
- * and the current state of the game board
+ * Represents a TicTacToe game board
  */
-public class TicTacToeGame {
+public class Board {
 
     /**
-     * The players in the game
+     * Represents the high-level status of the game board
      */
-    private final Player playerX;
-    private final Player playerO;
+    public static enum Status { InProgress, Draw, XWins, OWins }
 
     /**
-     * The current state of the game board
+     * The current game board state
      */
-    private final Board board = new Board();
+    private final PlayerToken[][] board = new PlayerToken[3][3];
 
     /**
-     * Initialize a new TicTacToe game with the given players
-     * @param playerX The X player
-     * @param playerO The O player
+     * Initialize a new, empty tictactoe board
      */
-    public TicTacToeGame(Player playerX, Player playerO) {
-        this.playerX = playerX;
-        this.playerO = playerO;
-    }
-
-    /**
-     * Request where the next player wants to place a token on the board,
-     * and then place that token, and update the game state accordingly.
-     * @return A record of the turn that was just played
-     * @throws IllegalArgumentException if the given position is already taken on the game board
-     */
-    public TurnRecord doNextTurn() throws IllegalArgumentException {
-        var turnToken = board.getNextTurnToken();
-        var whoseTurn = switch(turnToken) {
-            case X -> playerX;
-            case O -> playerO;
-        };
-        var pos = whoseTurn.pickNextMove(board);
-
-        // If the player objects are implemented correctly, this should never happen
-        if ( ! board.isEmptyAt(pos) ) {
-            throw new IllegalArgumentException("Position %s is already taken".formatted(pos));
+    public Board() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = null;
+            }
         }
-
-        board.placeNextToken(pos);
-
-        return new TurnRecord(whoseTurn, turnToken, pos, board);
     }
 
     /**
-     * Represents what happened on one turn that was just played
-     * @param whoseTurn The player who just played
-     * @param positionPlayed The position on the board where the token was placed
-     * @param newBoardState The new state of the game board after the turn was played
+     * Copy constructor. Creates a new board that is a copy of the given one.
+     * @param other The board to copy
      */
-    public record TurnRecord(Player whoseTurn, PlayerToken token, Position positionPlayed, Board newBoardState) {}
+    public Board(Board other) {
+        for (int i = 0; i < 3; i++) {
+            System.arraycopy(other.board[i], 0, board[i], 0, 3);
+        }
+    }
 
+    /**
+     * Initialize a new board with the given state (useful for testing)
+     * @param b A string representation of the board state.
+     *          The string should be 3 lines long, with each line containing 3 characters,
+     *          or one 9 character string.
+     *          Any character other than 'X', 'O' is considered an empty spot on the board.
+     *          E.g. "XOX-XO--O" or "XOX\n-XO\n--O"
+     */
+    public Board(String b) {
+        b = b.replace("\n", "").toUpperCase();
+        if (b.length() != 9) {
+            throw new IllegalArgumentException("Invalid board state string");
+        }
+        for (int i = 0; i < b.length(); i++) {
+            if (b.charAt(i) == 'X') {
+                this.placeX(new Position(Row.values()[i / 3], Col.values()[i % 3]));
+            } else if (b.charAt(i) == 'O') {
+                this.placeO(new Position(Row.values()[i / 3], Col.values()[i % 3]));
+            }
+        }
+    }
+
+    /**
+     * @param pos A board position
+     * @return The row index in this.board corresponding to the given board position
+     */
+    private int rowIdx(Position pos) {
+        return switch (pos.row()) {
+            case Top -> 0;
+            case Middle -> 1;
+            case Bottom -> 2;
+        };
+    }
+
+    /**
+     * @param pos A board position
+     * @return The column index in this.board corresponding to the given board position
+     */
+    private int colIdx(Position pos) {
+        return switch (pos.col()) {
+            case Left -> 0;
+            case Middle -> 1;
+            case Right -> 2;
+        };
+    }
+
+    /**
+     * @return The current status of the game board
+     */
+    public Status getStatus() {
+        switch (this.getWinner()) {
+            case X: return Status.XWins;
+            case O: return Status.OWins;
+            case null: {
+                if (this.isFull()) {
+                    return Status.Draw;
+                } else {
+                    return Status.InProgress;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param token The token to count
+     * @return The number of tokens of the given type on the board
+     */
+    private int count(PlayerToken token) {
+        int count = 0;
+        for (var row : board) {
+            for (var cell : row) {
+                if (cell == token ) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return The number of X tokens on the board
+     */
+    private int countXs() {
+        return count(X);
+    }
+
+    /**
+     * @return The number of O tokens on the board
+     */
+    private int countOs() {
+        return count(O);
+    }
+
+    /**
+     * @return The PlayerToken for the winner of the game, or null if there is currently no winner
+     */
+    public PlayerToken getWinner() {
+        // Check the rows and columns
+        for (int i = 0; i < 3; i++) {
+            // Check if the row is all the same
+            if (board[i][0] != null && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+                return board[i][0];
+            }
+            // Check if the column is all the same
+            if (board[0][i] != null && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+                return board[0][i];
+            }
+        }
+        // Check the diagonals
+        if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+            return board[0][0];
+        }
+        if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+            return board[0][2];
+        }
+        return null;
+    }
+
+    /**
+     * @return true if the board is full; false otherwise
+     */
+    public boolean isFull() {
+        for (var row : board) {
+            for (var cell : row) {
+                if (cell == null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return A list of all empty positions on the game board
+     */
+    public List<Position> getEmptyCells() {
+        var emptyPositions = new ArrayList<Position>();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                var pos = new Position(Row.values()[i], Col.values()[j]);
+                if (isEmptyAt(pos)) {
+                    emptyPositions.add(pos);
+                }
+            }
+        }
+        return emptyPositions;
+    }
+
+    /**
+     * @param pos A game board position
+     * @return true if the given board position is empty; false otherwise
+     */
+    public boolean isEmptyAt(Position pos) {
+        return board[rowIdx(pos)][colIdx(pos)] == null;
+    }
+
+    /**
+     * Places an 'X' at the given position on the board.
+     * @param pos The position to place the token.
+     */
+    public void placeX(Position pos) {
+        if (isEmptyAt(pos)) {
+            board[rowIdx(pos)][colIdx(pos)] = X;
+        } else {
+            throw new IllegalArgumentException("Position already occupied");
+        }
+    }
+
+    /**
+     * Places an 'O' at the given position on the board.
+     * @param pos The position to place the token.
+     */
+    public void placeO(Position pos) {
+        if (isEmptyAt(pos)) {
+            board[rowIdx(pos)][colIdx(pos)] = O;
+        } else {
+            throw new IllegalArgumentException("Position already occupied");
+        }
+    }
 }

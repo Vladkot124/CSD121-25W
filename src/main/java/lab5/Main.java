@@ -1,48 +1,45 @@
-package tictactoe;
-
-import tictactoe.game.TicTacToeGame;
-import tictactoe.ui.Console;
-
-import static tictactoe.game.PlayerToken.O;
-import static tictactoe.game.PlayerToken.X;
+import lab5.Board;
+import lab5.Player;
+import lab5.player.Circe;
+import lab5.player.Omola;
+import lab5.player.HumanPlayer;
+import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        Console.println("""
-                Welcome to Tic Tac Toe!
-                Players can be human or computer.  When prompted for player names use one of the following:
-                - To play as a human, just enter a name
-                - To have the player played by the computer enter @ followed by one of the following names:
-                  - TODO: Add the names of the computer players you have implemented here!
-                """);
-        var player1 = Console.promptForPlayer(X);
-        var player2 = Console.promptForPlayer(O);
-        var game = new TicTacToeGame(player1, player2);
+        System.out.println("Welcome to Tic Tac Toe!");
+        System.out.print("Enter Player 1 name: ");
+        String player1Name = scanner.nextLine();
+        System.out.print("Choose Player 1 type (human, circe, omola): ");
+        String player1Type = scanner.nextLine().toLowerCase();
 
-        while (true) {
+        System.out.print("Enter Player 2 name: ");
+        String player2Name = scanner.nextLine();
+        System.out.print("Choose Player 2 type (human, circe, omola): ");
+        String player2Type = scanner.nextLine().toLowerCase();
 
-            // Advance the game based on the player's selected move, and get the results
-            var turnRecord = game.doNextTurn();
+        Player player1 = createPlayer(player1Name, player1Type);
+        Player player2 = createPlayer(player2Name, player2Type);
 
-            // Display the results of the turn
-            Console.println("%s plays %s at %s %s".formatted(turnRecord.whoseTurn().getName(), turnRecord.token(), turnRecord.positionPlayed().row(), turnRecord.positionPlayed().col()));
-            var newBoard = turnRecord.newBoardState();
-            Console.showBoard(newBoard);
+        Board board = new Board();
+        TicTacToeGame game = new TicTacToeGame(board, player1, player2);
+        game.play();
 
-            // Decide what to do next based on the current status of the game
-            switch ( newBoard.getStatus() ) {
-                case Draw -> {
-                    Console.println("It's a draw!");
-                    System.exit(0);
-                }
-                case XWins, OWins -> {
-                    Console.println("%s wins!".formatted(turnRecord.whoseTurn().getName()));
-                    System.exit(0);
-                }
-            }
+        scanner.close();
+    }
 
+    private static Player createPlayer(String name, String type) {
+        switch (type) {
+            case "human":
+                return new HumanPlayer(name);
+            case "circe":
+                return new Circe(name);
+            case "omola":
+                return new Omola(name);
+            default:
+                throw new IllegalArgumentException("Unknown player type: " + type);
         }
     }
 }

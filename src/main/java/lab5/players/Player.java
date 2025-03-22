@@ -1,40 +1,35 @@
-package tictactoe.players;
+package lab5.player;
 
-import tictactoe.game.Board;
-import tictactoe.game.Position;
-import tictactoe.ui.Console;
+import lab5.game.Board;
 
 /**
- * Represents a player in the game.
- *
- * TODO: Make this an abstract class with various subclasses for different types of players
+ * Abstract class representing a player in Tic Tac Toe.
  */
-public class Player {
+public abstract class Player {
+    protected String name;
 
-    private String name;
-
+    /**
+     * Constructs a player with a given name.
+     * @param name The player's name.
+     */
     public Player(String name) {
         this.name = name;
     }
 
-    public String getName() { return name; }
+    /**
+     * Gets the player's name.
+     * @return The player's name.
+     */
+    public String getName() {
+        return name;
+    }
 
     /**
-     * Prompts the player to pick their next move.
-     * @param currentBoard The current state of the game board
-     * @return The position on the board where the player wants to place their token
-     *
-     * TODO: Make this an abstract method in an abstract class,
-     *          and use this implementation in a HumanPlayer subclass
+     * Abstract method to pick the next move.
+     * Must be implemented by subclasses.
+     * @param board The current game board.
+     * @return The chosen move as an integer.
      */
-    public Position pickNextMove(Board currentBoard) {
-        while (true) {
-            var move = Console.promptForPosition(getName() + " pick your next move: ");
-            if (currentBoard.isEmptyAt(move)) {
-                return move;
-            } else {
-                Console.printAlert("That position is already taken.");
-            }
-        }
-    }
+    public abstract int pickNextMove(Board board);
 }
+

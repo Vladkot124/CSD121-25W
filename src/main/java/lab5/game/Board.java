@@ -198,83 +198,27 @@ public class Board {
         return board[rowIdx(pos)][colIdx(pos)] == null;
     }
 
-
     /**
-     * This function determines whose turn it is based on the current state.
-     * ASSUMPTIONS:
-     * - X was the first token placed on the board
-     * - Players have alternated turns since the beginning of the game
-     * If the above assumptions are not met, this function may not return a correct result.
-     * @return The token of the player whose may place the next token.
+     * Places an 'X' at the given position on the board.
+     * @param pos The position to place the token.
      */
-    public PlayerToken getNextTurnToken() {
-        return countXs() > countOs() ? O : X;
-    }
-
-    /**
-     * Places an X token on the game board at the given position
-     * @param pos A game board position
-     * @throws IllegalArgumentException if the position is already occupied
-     */
-    public void placeX(Position pos) throws IllegalArgumentException {
-        place(pos, X);
-    }
-
-    /**
-     * Places an O token on the game board at the given position
-     * @param pos A game board position
-     * @throws IllegalArgumentException if the position is already occupied
-     */
-    public void placeO(Position pos) throws IllegalArgumentException {
-        place(pos, O);
-    }
-
-    /**
-     * Places the given token on the game board at the given position.
-     * @param pos A game board position
-     * @param token The token to place
-     * @throws IllegalArgumentException if the position is already occupied
-     */
-    public void place(Position pos, PlayerToken token) throws IllegalArgumentException {
-
-        if (!isEmptyAt(pos)) {
-            throw new IllegalArgumentException("Position is already occupied");
-        }
-
-        board[rowIdx(pos)][colIdx(pos)] = token;
-    }
-
-    /**
-     * Places the next token on the game board at the given position.
-     * The next token is determined by the current state of the board,
-     * and assumes that X is always the first token played. Thus, if
-     * there are more X tokens on the board than O tokens, the next
-     * token placed will be an O, and vice versa.
-     * @param pos A game board position
-     */
-    public void placeNextToken(Position pos) {
-        switch (getNextTurnToken()) {
-            case X -> placeX(pos);
-            case O -> placeO(pos);
+    public void placeX(Position pos) {
+        if (isEmptyAt(pos)) {
+            board[rowIdx(pos)][colIdx(pos)] = X;
+        } else {
+            throw new IllegalArgumentException("Position already occupied");
         }
     }
 
     /**
-     * @return A 3x3 string representation of the game board
-     *         E.g.
-     *               .XO
-     *               .X.
-     *               O..
+     * Places an 'O' at the given position on the board.
+     * @param pos The position to place the token.
      */
-    @Override
-    public String toString() {
-        var boardString = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                boardString.append(board[i][j] == null ? '.' : board[i][j].toString());
-            }
-            boardString.append("\n");
+    public void placeO(tictactoe.game.Position pos) {
+        if (isEmptyAt(pos)) {
+            board[rowIdx(pos)][colIdx(pos)] = O;
+        } else {
+            throw new IllegalArgumentException("Position already occupied");
         }
-        return boardString.toString();
     }
 }
