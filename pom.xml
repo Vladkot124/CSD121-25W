@@ -13,18 +13,18 @@
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.version>21.0.1</javafx.version> <!-- ✅ Use stable, matching version -->
+        <javafx.version>21.0.1</javafx.version>
     </properties>
 
     <dependencies>
-        <!-- ✅ JavaFX Controls -->
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
 
-        <!-- ✅ JavaFX FXML (if you use it later) -->
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -34,13 +34,13 @@
 
     <build>
         <plugins>
-            <!-- ✅ JavaFX Maven Plugin to run your app -->
+
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>lab6.CurrencyConverter</mainClass> <!-- ✅ Replace if your main class is different -->
+                    <mainClass>lab6.CurrencyConverter</mainClass>
                 </configuration>
                 <executions>
                     <execution>
