@@ -202,4 +202,271 @@ This lecture really helped clarify the role of abstract classes and interfaces i
 - Refactoring: We practiced refactoring code to improve performance and readability.
 - Commenting: Proper commenting to ensure that the code is easily understandable by others.
 - I  realized that refactoring is an important step in improving code efficiency and readability, and it should be part of every development process.
+## March 3, 2025 (Monday) - Lecture Notes: Generalization & Polymorphism
 
+### Key Concepts:
+- **DRY Principle**: Avoid repeating logic by reusing methods that represent the same behavior, not just similar lines of code.
+- **Generalization**: Sharing common behavior in a superclass to reduce code duplication.
+- **Polymorphism**: Enables treating different object types through a common interface or superclass.
+- **Encapsulation**: Keeping internal data private while exposing necessary methods through public interfaces.
+- **Cohesion**: Grouping related functionality together within a class to make it more understandable and maintainable.
+- **Coupling**: Reducing dependencies between classes makes the system easier to maintain.
+
+### Code Example:
+```java
+// Superclass
+public class Person {
+    protected String name;
+    protected String address;
+
+    public String letterhead() {
+        return name + " " + address;
+    }
+}
+
+// Subclass
+public class Student extends Person {
+    private String program;
+
+    public String getStudentInfo() {
+        return "Student: " + name + " enrolled in " + program;
+    }
+}
+```
+
+---
+
+## March 5, 2025 (Wednesday) - Lecture Notes: Interfaces
+
+### Key Concepts:
+- **Interfaces**: Define method signatures without implementation to support abstraction without inheritance.
+- **Default Methods**: Allow basic implementation within interfaces (if not tied to instance state).
+- **Interface Segregation Principle**: Split large interfaces into smaller ones if not all methods apply to all implementing classes.
+- **Dependency Inversion Principle**: High-level modules should depend on abstractions, not concrete implementations.
+
+### Code Example:
+```java
+public interface Alerter {
+    void alert(String message);
+}
+
+public class EmailAlerter implements Alerter {
+    public void alert(String message) {
+        System.out.println("Sending email: " + message);
+    }
+}
+
+public class SMSAlerter implements Alerter {
+    public void alert(String message) {
+        System.out.println("Sending SMS: " + message);
+    }
+}
+```
+
+---
+
+## March 10, 2025 (Monday) - Lab 5: Implementing AI Players for Tic Tac Toe
+
+### Lab Focus:
+- Build multiple AI players using inheritance and polymorphism.
+- Implement and test decision-making strategies using a shared `ComputerPlayer` superclass.
+
+### AI Strategies Implemented:
+- **Circe**: Chooses the first available move.
+- **Randy**: Chooses a move at random.
+- **Linus**: Blocks or wins if possible.
+
+### Code Example:
+```java
+public abstract class ComputerPlayer {
+    protected char symbol;
+
+    public ComputerPlayer(char symbol) {
+        this.symbol = symbol;
+    }
+
+    public abstract int pickMove(Board board);
+}
+
+public class Circe extends ComputerPlayer {
+    public int pickMove(Board board) {
+        return board.getFirstEmptyIndex();
+    }
+}
+```
+
+---
+
+## March 12, 2025 (Wednesday) - Lecture Notes: Lambdas and Higher-Order Functions
+
+### Key Concepts:
+- **Functional Interface**: An interface with a single abstract method.
+- **Lambda Expressions**: Anonymous functions that match the signature of a functional interface.
+- **Method References**: Use `::` to directly pass existing methods (e.g., `System.out::println`).
+- **Streams API**: Enable processing of collections using a functional style with methods like `filter()`, `map()`, and `forEach()`.
+
+### Code Example:
+```java
+@FunctionalInterface
+public interface MathOp {
+    double calc(double x, double y);
+}
+
+MathOp add = (x, y) -> x + y;
+System.out.println(add.calc(5, 3)); // Output: 8
+
+List<String> names = List.of("Anna", "Bea", "Charles");
+names.stream().filter(name -> name.length() > 3).forEach(System.out::println);
+```
+
+
+## March 17, 2025 (Monday) - Personal Project Work: Strategy Pattern Practice
+
+### Goals:
+- Practice implementing the **Strategy Design Pattern** using Java interfaces and lambdas.
+
+### Concepts Practiced:
+- **Interfaces**: Interfaces define methods without implementations, which must be implemented by classes.
+- **Lambda Expressions**: Lambdas allow you to create inline implementations of functional interfaces.
+- **Dependency Injection**: Passing behavior into classes instead of hardcoding logic inside.
+
+### Code Example:
+```java
+// Interface
+public interface PaymentMethod {
+    void processPayment(double amount);
+}
+
+// Implementation 1
+public class CreditCardPayment implements PaymentMethod {
+    public void processPayment(double amount) {
+        System.out.println("Processing credit card payment of $" + amount);
+    }
+}
+
+// Implementation 2
+public class PayPalPayment implements PaymentMethod {
+    public void processPayment(double amount) {
+        System.out.println("Processing PayPal payment of $" + amount);
+    }
+}
+
+// Lambda Implementation
+PaymentMethod bitcoin = amount -> System.out.println("Processing Bitcoin payment of $" + amount);
+```
+---
+
+## March 22, 2025 (Saturday) - Lab 6 Setup and JavaFX UI Planning
+
+### Goals:
+- Set up the Maven project and design the GUI for Tic Tac Toe using JavaFX and FXML.
+
+### Concepts:
+- **JavaFX**: A framework for creating rich GUI applications in Java.
+- **FXML**: A markup language used to define UI layout for JavaFX.
+- **Event Handling**: JavaFX allows event-driven programming using `@FXML` methods.
+- **Interfaces**: Used to assign AI strategies like `Circe` or `Randy` at runtime.
+
+### Code Example:
+```java
+@FXML
+private void handleMove(ActionEvent event) {
+    Button btn = (Button) event.getSource();
+    int row = GridPane.getRowIndex(btn);
+    int col = GridPane.getColumnIndex(btn);
+    game.makeMove(row, col);
+    btn.setText(game.getCurrentPlayerSymbol());
+}
+```
+---
+
+## March 24, 2025 (Monday) - Lecture Notes: Strategy Pattern in GUI Design
+
+### Topics Covered:
+- **Strategy Pattern**: Encapsulate a family of algorithms and make them interchangeable.
+- **Interfaces**: Define a common contract like `pickMove()` used by multiple AI strategies.
+
+### Code Example:
+```java
+public interface PlayerStrategy {
+    int pickMove(Board board);
+}
+
+public class Circe implements PlayerStrategy {
+    public int pickMove(Board board) {
+        // always pick the first empty spot
+        return board.getFirstAvailableSquare();
+    }
+}
+```
+---
+
+## March 26, 2025 (Wednesday) - Lab 6 Development: Integrating Logic and UI
+
+### Progress:
+- Connected the JavaFX UI to the game logic using interfaces.
+- Fixed issues with button state and game reset.
+
+### Concepts:
+- **Polymorphism**: Calling methods like `pickMove()` on different subclasses via the interface.
+- **Encapsulation**: Each AI strategy class handles its own logic internally.
+- **Code Reusability**: By using `PlayerStrategy` references, I was able to switch AI players easily.
+
+### Code Example:
+```java
+PlayerStrategy strategy1 = new Circe();
+PlayerStrategy strategy2 = new Randy();
+
+Game game = new Game(strategy1, strategy2);
+game.start();
+```
+---
+
+## March 31, 2025 (Monday) - Lecture Notes: Lambda Expressions
+
+### Key Points:
+- **Functional Interfaces**: An interface with a single abstract method.
+- **Lambda Syntax**: `(parameters) -> expression`
+- **Method References**: `System.out::println` is a shortcut for `(s) -> System.out.println(s)`
+
+### Code Example:
+```java
+List<String> names = List.of("Alice", "Bob", "Charlie");
+names.forEach(name -> System.out.println(name));
+
+// Even shorter using method reference
+names.forEach(System.out::println);
+```
+---
+
+## April 2, 2025 (Wednesday) - Stream API Practice and Refactoring
+
+### Goals:
+- Use the Java Stream API to make list processing cleaner and more declarative.
+
+### Concepts:
+- **Streams**: Allow operations like `filter()`, `map()`, and `forEach()` to be chained.
+- **Functional Style**: Emphasis on transformation and filtering of data.
+
+### Code Example:
+```java
+List<String> words = List.of("apple", "banana", "cherry");
+long count = words.stream()
+                  .filter(w -> w.length() > 5)
+                  .count();
+
+System.out.println("Words longer than 5 letters: " + count);
+```
+---
+
+## April 6, 2025 (Saturday) - Finalizing Lab 6 Submission
+
+### Tasks Completed:
+- Cleaned up all classes and added meaningful JavaDoc and inline comments.
+- Verified that all strategies work correctly in the GUI.
+- Added reset functionality and better error handling.
+
+### Summary:
+- **Abstract Classes**: These classes cannot be instantiated but can provide a base for other classes to inherit from.
+- **Interfaces**: Interfaces define methods without implementations, which must be implemented by classes.
+- **Lambdas and Streams**: Helped simplify logic and make the code more concise.
